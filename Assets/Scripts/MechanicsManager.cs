@@ -10,19 +10,31 @@ public class MechanicsManager : MonoBehaviour
     public PlatformPooling platformPooling;
     public int blocksCount;
     public Vector3[] positions;
+    [SerializeField]
+    public List<GameObject> crowd;
+
+    public int activeCount;
     private void Start()
     {
-        
+        for(int i = 0; i < activeCount; i++)
+        {
+            crowd[i].SetActive(true);
+            print(i);
+        }
+
+
         Sequence sq = DOTween.Sequence();
         sq.AppendInterval(2f);
         sq.Append(personGO.transform
-            .DOMoveX(-20 * (blocksCount -1), (blocksCount / 2))
+            .DOMoveX(-20 * (blocksCount - 1), (blocksCount / 2))
             .SetEase(Ease.Linear));
         for (int i = 0; i < blocksCount; i++)
         {
 
             platformPooling.platforms[i].SetActive(true);
         }
+
+
         //StartCoroutine(platformRepeat());
     }
     //private void Update()
@@ -47,6 +59,16 @@ public class MechanicsManager : MonoBehaviour
         }
     }
     
+    public void UpdateCrowd(int num)
+    {
+        activeCount = num;
+        for (int i = 0; i < activeCount; i++)
+        {
+            crowd[i].SetActive(true);
+            print(i);
+        }
+    }
+
     public float x_Start, z_Start;
     public int ColumnLength;
     public int RowLength;
